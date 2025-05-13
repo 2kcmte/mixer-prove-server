@@ -34,9 +34,8 @@ A standalone HTTP/WebSocket service that generates zero‐knowledge proofs for S
 ## Installation
 
 ```bash
-git clone https://github.com/your-org/solana-mixer-prove-server.git
-cd solana-mixer-prove-server
-cargo build --release
+git clone https://github.com/2kcmte/mixer-prove-server.git
+cd mixer-prove-server
 ```
 
 ## Configuration
@@ -46,6 +45,11 @@ Copy `.env.example` to `.env` and adjust as needed:
 ```bash
 # Required for SP1 prover network
 NETWORK_PRIVATE_KEY_SP1= "your_private_key"  
+```
+## Build the SP1 Program
+```bash
+cd program
+cargo prove build 
 ```
 
 ## Running the Server
