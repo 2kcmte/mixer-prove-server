@@ -1,0 +1,46 @@
+[package]
+version = "0.1.0"
+name = "mixer-script"
+edition = "2021"
+default-run = "mixer"
+
+[[bin]]
+name = "mixer"
+path = "src/bin/main.rs"
+
+[[bin]]
+name = "evm"
+path = "src/bin/evm.rs"
+
+[[bin]]
+name = "vkey"
+path = "src/bin/vkey.rs"
+
+[dependencies]
+sp1-sdk = "4.2.0"
+serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
+serde = { version = "1.0.200", default-features = false, features = ["derive"] }
+clap = { version = "4.0", features = ["derive", "env"] }
+tracing = "0.1.40"
+hex = "0.4.3"
+alloy-sol-types = { workspace = true }
+mixer-lib = { path = "../lib" }
+dotenv = "0.15.0"
+axum = { version = "0.7.4", features = ["ws"] }
+num-bigint = "0.4"
+tokio = { version = "1.40", features = ["full"] }
+tower-http = { version = "0.5", features = ["cors"] }
+regex = "1.7"
+
+anchor-client = "0.31.1"
+borsh = "0.10"
+reqwest = { version = "0.11", features = ["json"] }
+light-poseidon = "0.3.0"
+ark-bn254 = "0.5"
+base64 = "0.22.1"
+bridgetree = "0.6.0"
+solana-poseidon = "2.1.6"
+solana-transaction-status = "2.1.6"
+
+[build-dependencies]
+sp1-build = "4.2.0"

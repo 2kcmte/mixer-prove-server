@@ -1,0 +1,12 @@
+[package]
+version = "0.1.0"
+name = "mixer-program"
+edition = "2021"
+
+[dependencies]
+alloy-sol-types = { workspace = true }
+mixer-lib = { path = "../lib" }
+light-poseidon = { workspace = true }
+sp1-zkvm = "4.2.0"
+ark-bn254 = { workspace = true }
+num-bigint = "0.4"

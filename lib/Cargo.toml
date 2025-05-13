@@ -1,0 +1,14 @@
+[package]
+name = "mixer-lib"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+alloy-sol-types = { workspace = true }
+light-poseidon = { workspace = true }
+merkle-poseidon = { git = "https://github.com/AlaaZorkane/merkle-poseidon" }
+ark-bn254 = { workspace = true }
+hex = "0.4"
+num-bigint = "0.4"
+rand = "0.8"
+ark-ff = { version = "0.5" }
