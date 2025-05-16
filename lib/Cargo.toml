@@ -6,7 +6,6 @@ edition = "2021"
 [dependencies]
 alloy-sol-types = { workspace = true }
 light-poseidon = { workspace = true }
-merkle-poseidon = { git = "https://github.com/AlaaZorkane/merkle-poseidon" }
 ark-bn254 = { workspace = true }
 hex = "0.4"
 num-bigint = "0.4"

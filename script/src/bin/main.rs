@@ -20,6 +20,16 @@ use std::str::FromStr;
 use tokio::net::TcpListener;
 use utils::*;
 
+use std::{any::Any, net::SocketAddr};
+use tower::ServiceBuilder;
+use tower_http::{
+    catch_panic::{CatchPanic, CatchPanicLayer},
+    cors::CorsLayer,
+};
+
+use ark_bn254::Fr;
+use light_poseidon::{Poseidon, PoseidonBytesHasher};
+
 pub const MIXER_ELF: &[u8] = include_elf!("mixer-program");
 const MERKLE_LEVELS: usize = 20;
 
@@ -378,8 +388,8 @@ async fn handle_ws(mut socket: WebSocket) {
     let (siblings, path_indices, root) =
         utils::compute_merkle_proof::<20>(&all_commits, leaf_index);
 
-    let siblings_array: [[u8; 32]; 20] = siblings.clone().try_into().unwrap();
-    let path_indices_array: [u8; 20] = path_indices.clone().try_into().unwrap();
+    let siblings_array: [[u8; 32]; 20] = siblings;
+    let path_indices_array: [u8; 20] = path_indices;
     utils::merkle_check::<20>(root, commitment, &siblings_array, &path_indices_array);
     println!("Root: {:?}", root);
     let root: [u8; 32] = root;
@@ -488,10 +498,13 @@ async fn handle_ws(mut socket: WebSocket) {
 
 #[tokio::main]
 async fn main() {
-    let cors = tower_http::cors::CorsLayer::new()
+    let cors = CorsLayer::new()
         .allow_origin(tower_http::cors::Any)
         .allow_methods(tower_http::cors::Any)
         .allow_headers(tower_http::cors::Any);
+    notmain();
+
+    let panic_layer = CatchPanicLayer::new();
 
     let app = Router::new()
         .route("/api/prove-mix", post(prove_mix))
@@ -502,10 +515,17 @@ async fn main() {
         .route("/api/decode-note-details", post(decode_note_details))
         .route("/api/get-pubkeys", get(get_pubkeys))
         .route("/ws/compute_withdrawal", get(ws_compute_proof_withdrawal))
-        .layer(cors);
+        .layer(
+            ServiceBuilder::new()
+                .layer(panic_layer) // catches any downstream panic → 500
+                .layer(cors),
+        );
 
-    notmain();
-    let listener = TcpListener::bind("0.0.0.0:3001").await.unwrap();
-    println!("Starting proof API server on 0.0.0.0:3001...");
-    axum::serve(listener, app).await.unwrap();
+    let addr: SocketAddr = "0.0.0.0:3001".parse().unwrap();
+    println!("Starting proof API server on {}", addr);
+
+    let listener = TcpListener::bind(addr).await.unwrap();
+    axum::serve(listener, app.into_make_service())
+        .await
+        .unwrap();
 }

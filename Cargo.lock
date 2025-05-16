@@ -4236,17 +4236,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3d97bbf43eb4f088f8ca469930cde17fa036207c9a5e02ccc5107c4e8b17c964"
 
 [[package]]
-name = "merkle-poseidon"
-version = "0.3.0"
-source = "git+https://github.com/AlaaZorkane/merkle-poseidon#e7632843eb3e041060b1126766db021a89fd588e"
-dependencies = [
- "ark-bn254 0.5.0",
- "ark-ff 0.5.0",
- "light-poseidon 0.3.0",
- "thiserror 2.0.12",
-]
-
-[[package]]
 name = "merlin"
 version = "3.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -4309,7 +4298,6 @@ dependencies = [
  "ark-ff 0.5.0",
  "hex",
  "light-poseidon 0.3.0",
- "merkle-poseidon",
  "num-bigint 0.4.6",
  "rand 0.8.5",
 ]
@@ -4340,6 +4328,7 @@ dependencies = [
  "clap",
  "dotenv",
  "hex",
+ "hyper 1.6.0",
  "light-poseidon 0.3.0",
  "mixer-lib",
  "num-bigint 0.4.6",
@@ -4352,6 +4341,7 @@ dependencies = [
  "sp1-build",
  "sp1-sdk",
  "tokio",
+ "tower 0.5.2",
  "tower-http",
  "tracing",
 ]
@@ -10221,12 +10211,14 @@ checksum = "1e9cd434a998747dd2c4276bc96ee2e0c7a2eadf3cae88e52be55a05fa9053f5"
 dependencies = [
  "bitflags 2.9.0",
  "bytes",
+ "futures-util",
  "http 1.3.1",
  "http-body 1.0.1",
  "http-body-util",
  "pin-project-lite",
  "tower-layer",
  "tower-service",
+ "tracing",
 ]
 
 [[package]]

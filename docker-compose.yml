@@ -1,0 +1,9 @@
+version: "3.8"
+services:
+  prove-server:
+    build: .
+    image: solana-mixer/prove-server:latest
+    env_file: .env
+    ports:
+      - "3001:3001"
+    restart: on-failure

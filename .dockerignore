@@ -1,0 +1,42 @@
+# Exclude target directories which can be huge
+**/target/
+!program/target/elf-compilation/riscv32im-succinct-zkvm-elf/release/
+
+# Exclude version control
+.git
+.gitignore
+
+# Exclude temp files
+**/*.tmp
+**/*.bak
+**/*.swp
+
+# Exclude logs
+**/*.log
+
+# Exclude node modules if any
+**/node_modules/
+
+# Exclude IDE files
+.idea/
+.vscode/
+**/*.sublime-*
+**/*.iml
+
+# Exclude any other large directories or files
+**/*.tar
+**/*.gz
+**/*.zip
+**/*.7z
+**/*.rar
+
+# Exclude any large assets, if any
+**/assets/
+**/images/
+
+# Exclude cargo registry and index
+.cargo/registry/
+.cargo/git/
+
+# Keep only essential files
+**/.env*
