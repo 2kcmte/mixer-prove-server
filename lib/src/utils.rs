@@ -73,10 +73,5 @@ pub fn create_random_commitment() -> (
             t
         },
     );
-    println!("nullifier     = {}", nullifier);
-    println!("secret        = {}", secret);
-    println!("nullifierHash = {:?}", nullifier_hash);
-    println!("commitment    = {:?}", commitment);
-    println!("preimage      = 0x{}", hex::encode(&preimage));
     (nullifier, secret, preimage, commitment, nullifier_hash)
 }

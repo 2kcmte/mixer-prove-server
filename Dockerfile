@@ -14,9 +14,20 @@ RUN apt-get update && apt-get install -y \
     ca-certificates \
     && rm -rf /var/lib/apt/lists/*
 
-# Install Rust using rustup
-RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
+
+# ---- Rust ------------------------------------------------------------------
+RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
+
+# ── NEW: pin toolchain & avoid future updates ───────────────────────────────
+ENV RUST_TOOLCHAIN=nightly-2024-05-20   
+RUN rustup set profile minimal \
+    && rustup toolchain install ${RUST_TOOLCHAIN} \
+    && rustup default ${RUST_TOOLCHAIN} \
+    && rustup component add rust-src --toolchain ${RUST_TOOLCHAIN} \
+    && rustup toolchain uninstall stable        # <── nothing left to “update”
+
+
 
 # Install SP1 using sp1up
 RUN curl -L https://sp1up.succinct.xyz | bash
