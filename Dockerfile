@@ -15,6 +15,7 @@ RUN apt-get update && apt-get install -y \
     && rm -rf /var/lib/apt/lists/*
 
 
+
 # ---- Rust ------------------------------------------------------------------
 RUN curl -sSf https://sh.rustup.rs | sh -s -- -y
 ENV PATH="/root/.cargo/bin:${PATH}"
@@ -62,6 +63,16 @@ RUN cargo metadata --format-version 1
 
 # Debug: Check if the binary exists in potential target directory
 RUN ls -la /app/target/release/ || echo "/app/target/release/ does not exist"
+
+
+# Install Docker client & CA certs
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends docker.io ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy your built server binary
+COPY --from=builder /app/script/target/release/mixer /usr/local/bin/mixer
+
 
 # Expose server port
 EXPOSE 3001
