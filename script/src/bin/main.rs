@@ -514,7 +514,7 @@ async fn main() {
         )
         .route("/api/decode-note-details", post(decode_note_details))
         .route("/api/get-pubkeys", get(get_pubkeys))
-        .route("/ws/compute_withdrawal", get(ws_compute_proof_withdrawal))
+        .route("/ws/compute_withdrawal", post(ws_compute_proof_withdrawal))
         .layer(
             ServiceBuilder::new()
                 .layer(panic_layer) // catches any downstream panic → 500
