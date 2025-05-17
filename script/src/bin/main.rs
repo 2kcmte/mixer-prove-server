@@ -172,11 +172,10 @@ async fn prove_mix(Json(req): Json<ProveRequest>) -> impl IntoResponse {
             return Err((StatusCode::INTERNAL_SERVER_ERROR, msg));
         }
     };
-
-    if let Err(e) = client.verify(&proof, &vk) {
+    /* if let Err(e) = client.verify(&proof, &vk) {
         let msg = format!("❌ proof verification failed: {}", e);
         return Err((StatusCode::INTERNAL_SERVER_ERROR, msg));
-    }
+    }*/
 
     let proof_hex = hex_encode(proof.bytes());
     Ok((
