@@ -20,9 +20,15 @@ RUN rustup set profile minimal \
     && rustup component add rust-src --toolchain ${RUST_TOOLCHAIN} \
     && rustup toolchain uninstall stable
 
-# Install SP1 prover
-RUN curl -sL https://sp1up.succinct.xyz | bash && sp1up
+
+# Install the sp1up script
+RUN curl -sL https://sp1up.succinct.xyz | bash
+
+# Make sure the newly-installed sp1up is in PATH *and* immediately usable.
+# We invoke it via its absolute path to avoid any shell-init magic.
+RUN /root/.sp1/bin/sp1up
 ENV PATH="/root/.sp1/bin:${PATH}"
+
 
 WORKDIR /app
 COPY . .
