@@ -35,7 +35,7 @@ COPY . .
 
 # Build the ZK program (ELF)
 WORKDIR /app/program
-RUN cargo prove build --release
+RUN cargo prove build
 
 # Copy ELF into a known location
 RUN mkdir -p /app/script \
